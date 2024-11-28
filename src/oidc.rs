@@ -1,4 +1,4 @@
-#![allow(upper_case_acronyms)]
+#![allow(clippy::upper_case_acronyms)]
 
 use serde_json::Value;
 use thiserror::Error;
@@ -46,11 +46,11 @@ impl OIDC {
             return false;
         }
 
-        if !self.get_open_id_configuration() {
-            println!("Failed to get OpenID configuration");
+        if let Err(err) = self.get_open_id_configuration().await {
+            println!("Failed to get OpenID configuration {}", err);
             return false;
         }
-
+        println!("ABOBA: {:#?}", self);
         true
     }
 
@@ -64,7 +64,7 @@ impl OIDC {
 
         let response = client
             .get(url)
-            .header("Citrix-ApplicationId", "")
+            .header("Citrix-ApplicationId", self.application_id.clone())
             .send()
             .await?;
 
@@ -87,8 +87,6 @@ impl OIDC {
             .expect("Value should be present and str")
             .to_string();
 
-        println!("ABOBA: {:#?}", self);
-
         Ok(())
     }
 
@@ -110,7 +108,7 @@ impl OIDC {
 
         let json = response.json::<Value>().await?;
 
-        self.authorization_endpoint = json["authorization_endpoind"]
+        self.authorization_endpoint = json["authorization_endpoint"]
             .as_str()
             .expect("Value should be present and str")
             .to_string();

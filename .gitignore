@@ -1,1 +1,32 @@
 /target
+.env
+# Rust specific
+*.rs.bk
+Cargo.lock
+Cargo.toml.orig
+
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Build directories
+/target
+/debug
+/release
+
+# IDEs and editors
+/.idea
+/.vscode
+*.swp
+*.swo
+*.swn
+*.bak
+*.tmp
+*.log
+
+# Other
+.DS_Store
+Thumbs.db

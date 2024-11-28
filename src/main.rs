@@ -18,5 +18,15 @@ async fn main() {
 
     let mut oidc_client = OIDC::new(customer_id, citrix_application_id);
     oidc_client.initialize().await;
+    let mut oauth2_client = oauth2_client::OAuth2Client::new(
+        client_id,
+        client_secret,
+        redirect_uri,
+        oidc_client.authorization_endpoint.clone(),
+        oidc_client.token_endpoint.clone(),
+        oidc_client.acr_values.clone(),
+    );
+
+    oauth2_client.authenticate().await;
     println!("Hello, world!");
 }

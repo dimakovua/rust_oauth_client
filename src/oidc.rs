@@ -20,11 +20,11 @@ pub struct OIDC {
     customer_id: String,
     application_id: String,
 
-    acr_values: String,
+    pub acr_values: String,
     encoded_acr_values: String,
-    oidc_discovery_endpoint: String,
-    authorization_endpoint: String,
-    token_endpoint: String,
+    pub oidc_discovery_endpoint: String,
+    pub authorization_endpoint: String,
+    pub token_endpoint: String,
 }
 
 impl OIDC {
